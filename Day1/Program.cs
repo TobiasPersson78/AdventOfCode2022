@@ -22,10 +22,10 @@ foreach (string currentRow in File.ReadAllLines(inputFilename))
 if (currentElfCalories > 0)
 	caloriesForAllElves.Add(currentElfCalories);
 
-Console.WriteLine("Day 1a");
+Console.WriteLine("Day 1A");
 int maxCalories = caloriesForAllElves.Max();
 Console.WriteLine($"The maximum number of calories is {maxCalories}.");
 
-Console.WriteLine("Day 1b");
+Console.WriteLine("Day 1B");
 int sumTopThreeCalories = caloriesForAllElves.OrderDescending().Take(3).Sum();
 Console.WriteLine($"The sum of calories for the three highest values is {sumTopThreeCalories}.");
