@@ -54,7 +54,6 @@ foreach ((string currentRow, int index)
 
 		sumOfGroupOfThreeBadgePriorities += GetPriorityForItem(groupOfThreeItem);
 	}
-
 }
 
 Console.WriteLine("Day 3A");
