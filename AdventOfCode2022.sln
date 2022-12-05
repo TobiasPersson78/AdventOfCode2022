@@ -5,11 +5,13 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day1", "Day1\Day1.csproj", "{43DF5072-0CBD-4ED4-9B00-E6F16DCB9FA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day2", "Day2\Day2.csproj", "{D5BE2A0E-8630-4E2D-B318-385701BE2239}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day2", "Day2\Day2.csproj", "{D5BE2A0E-8630-4E2D-B318-385701BE2239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day3", "Day3\Day3.csproj", "{1485E011-6310-444A-B418-D4010ABF814C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day3", "Day3\Day3.csproj", "{1485E011-6310-444A-B418-D4010ABF814C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day4", "Day4\Day4.csproj", "{AB362898-3A31-4D65-8820-706BD1E747AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day4", "Day4\Day4.csproj", "{AB362898-3A31-4D65-8820-706BD1E747AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day5", "Day5\Day5.csproj", "{563EB928-9F46-44B0-A5BA-019C10C81752}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{AB362898-3A31-4D65-8820-706BD1E747AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB362898-3A31-4D65-8820-706BD1E747AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB362898-3A31-4D65-8820-706BD1E747AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{563EB928-9F46-44B0-A5BA-019C10C81752}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{563EB928-9F46-44B0-A5BA-019C10C81752}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{563EB928-9F46-44B0-A5BA-019C10C81752}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{563EB928-9F46-44B0-A5BA-019C10C81752}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
