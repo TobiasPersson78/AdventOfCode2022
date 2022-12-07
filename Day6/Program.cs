@@ -4,37 +4,28 @@ string inputFilename = useExampleInput
 	? "exampleInput.txt"
 	: "input.txt";
 
-string messageStream = File.ReadAllText(inputFilename).Trim();
+char[] messageStream = File.ReadAllText(inputFilename).Trim().ToCharArray();
 
-IList<char> slidingWindowBufferPartA = new List<char>();
-IList<char> slidingWindowBufferPartB = new List<char>();
-int startOfPacketIndex = -1;
-int startOfMessageIndex = -1;
 const int slidingWindowSizePartA = 4;
 const int slidingWindowSizePartB = 14;
 
-for (int index = 0; index < messageStream.Length; ++index)
+int FindFirstAllUniqueWindowIndex(char[] streamContent, int slidingWindowSize)
 {
-	if (slidingWindowBufferPartA.Count == slidingWindowSizePartA)
-		slidingWindowBufferPartA.RemoveAt(0);
-	if (slidingWindowBufferPartB.Count == slidingWindowSizePartB)
-		slidingWindowBufferPartB.RemoveAt(0);
-
-	slidingWindowBufferPartA.Add(messageStream[index]);
-	slidingWindowBufferPartB.Add(messageStream[index]);
-
-	if (slidingWindowBufferPartA.Distinct().Count() == slidingWindowSizePartA &&
-		startOfPacketIndex < 0)
+	for (int index = slidingWindowSize; index < messageStream.Length; ++index)
 	{
-		startOfPacketIndex = index + 1; // Adjust for one-based indexing.
+		// As the end index is exclusive, the returned index will coincidentally be the same as
+		// the wanted one-based indexing would yield.
+		if (streamContent[(index - slidingWindowSize)..index].Distinct().Count() == slidingWindowSize)
+		{
+			return index;
+		}
 	}
-	if (slidingWindowBufferPartB.Distinct().Count() == slidingWindowSizePartB &&
-		startOfMessageIndex < 0)
-	{
-		startOfMessageIndex = index + 1; // Adjust for one-based indexing.
-	}
+
+	throw new InvalidOperationException("No all unique window found.");
 }
 
+int startOfPacketIndex = FindFirstAllUniqueWindowIndex(messageStream, slidingWindowSizePartA);
+int startOfMessageIndex = FindFirstAllUniqueWindowIndex(messageStream, slidingWindowSizePartB);
 
 Console.WriteLine("Day 6A");
 Console.WriteLine($"First packet index: {startOfPacketIndex}");
