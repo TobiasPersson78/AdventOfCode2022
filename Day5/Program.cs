@@ -8,8 +8,7 @@ string inputFilename = useExampleInput
 
 bool isReadingStartPosition = true;
 
-bool isStartPositionLine(string line) => line.TrimStart().First() == '[';
-bool isColumnIndexLine(string line) => Regex.IsMatch(line, @"^(\s+\d+)+\s*$");
+bool IsColumnIndexLine(string line) => Regex.IsMatch(line, @"^(\s+\d+)+\s*$");
 
 (int Count, int From, int To) ParseMoveLine(string line)
 {
@@ -43,7 +42,7 @@ foreach (string row in File.ReadAllLines(inputFilename).Where(item => !string.Is
 {
 	if (isReadingStartPosition)
 	{
-		if (isColumnIndexLine(row))
+		if (IsColumnIndexLine(row))
 		{
 			isReadingStartPosition = false;
 
@@ -69,20 +68,20 @@ foreach (string row in File.ReadAllLines(inputFilename).Where(item => !string.Is
 		List<char> partBTemporaryContainer = new();
 		while (count-- > 0)
 		{
-			stacksPartA[to - 1].Push(stacksPartA[from - 1].Pop());
-			partBTemporaryContainer.Add(stacksPartB[from - 1].Pop());
+			stacksPartA![to - 1].Push(stacksPartA![from - 1].Pop());
+			partBTemporaryContainer.Add(stacksPartB![from - 1].Pop());
 		}
 
 		partBTemporaryContainer.Reverse();
 		foreach (char currentItem in partBTemporaryContainer)
 		{
-			stacksPartB[to - 1].Push(currentItem);
+			stacksPartB![to - 1].Push(currentItem);
 		}
 	}
 }
 
-string topOfStacksPartA = string.Concat(stacksPartA.Where(stack => stack.Any()).Select(stack => stack.Peek()));
-string topOfStacksPartB = string.Concat(stacksPartB.Where(stack => stack.Any()).Select(stack => stack.Peek()));
+string topOfStacksPartA = string.Concat(stacksPartA!.Where(stack => stack.Any()).Select(stack => stack.Peek()));
+string topOfStacksPartB = string.Concat(stacksPartB!.Where(stack => stack.Any()).Select(stack => stack.Peek()));
 
 Console.WriteLine("Day 5A");
 Console.WriteLine($"Top of the stacks: {topOfStacksPartA}");

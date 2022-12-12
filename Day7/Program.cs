@@ -6,7 +6,7 @@ string inputFilename = useExampleInput
 	? "exampleInput.txt"
 	: "input.txt";
 
-Node<FolderData> rootFolder = new Node<FolderData>(null);
+Node<FolderData> rootFolder = new(null);
 rootFolder.Value.Name = "/";
 
 Node<FolderData> currentFolder = rootFolder;
@@ -179,7 +179,7 @@ class Node<T> where T : class, new()
 
 class FolderData
 {
-	public string Name { get; set; }
+	public string? Name { get; set; }
 	public IList<FileData> Files { get; } = new List<FileData>();
 
 	public int LastCalculatedSize { get; set; }
@@ -187,6 +187,6 @@ class FolderData
 
 class FileData
 {
-	public string Name { get; set; }
-	public int Size { get; set; }
+	public string? Name { get; init; }
+	public int Size { get; init; }
 }

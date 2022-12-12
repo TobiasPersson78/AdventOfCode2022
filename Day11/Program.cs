@@ -7,29 +7,29 @@ string inputFilename = useExampleInput
 	? "exampleInput.txt"
 	: "input.txt";
 
-static IEnumerable<T> GetNumbersFromRow<T>(string row) where T: IParsable<T> =>
-    Regex
-        .Matches(row, @"(\d+)+")
+static IEnumerable<T> GetNumbersFromRow<T>(string row) where T : IParsable<T> =>
+	Regex
+		.Matches(row, @"(\d+)+")
 		.Where(match => match.Success)
 		.SelectMany(match => match.Groups.Values.Skip(1))
-        .Select(value => T.Parse(value.Value, System.Globalization.CultureInfo.InvariantCulture));
+		.Select(value => T.Parse(value.Value, System.Globalization.CultureInfo.InvariantCulture));
 
 static IEnumerable<Monkey<T>> ParseMonkeys<T>(string inputFilename) where T :
 	struct,
-    IMultiplyOperators<T, T, T>,
-    IAdditionOperators<T, T, T>,
-    IModulusOperators<T, T, T>,
-    IDivisionOperators<T, T, T>,
-    IParsable<T>,
+	IMultiplyOperators<T, T, T>,
+	IAdditionOperators<T, T, T>,
+	IModulusOperators<T, T, T>,
+	IDivisionOperators<T, T, T>,
+	IParsable<T>,
 	IIncrementOperators<T>
 {
 	Monkey<T> currentMonkey = new();
 
-    foreach (string row in File.ReadAllLines(inputFilename).Where(item => !string.IsNullOrEmpty(item)))
+	foreach (string row in File.ReadAllLines(inputFilename).Where(item => !string.IsNullOrEmpty(item)))
 	{
 		if (row.Contains("Monkey "))
-            currentMonkey = new();
-        else if (row.Contains("Starting items:"))
+			currentMonkey = new();
+		else if (row.Contains("Starting items:"))
 			currentMonkey.Items = GetNumbersFromRow<T>(row).ToList();
 		else if (row.Contains("Operation: new = old * old"))
 			currentMonkey.Operation = item => item * item;
@@ -52,7 +52,7 @@ static IEnumerable<Monkey<T>> ParseMonkeys<T>(string inputFilename) where T :
 			currentMonkey.TestFalseTarget = GetNumbersFromRow<int>(row).First();
 			yield return currentMonkey;
 		}
-    }
+	}
 }
 
 static void ExecuteRounds<T>(
@@ -60,22 +60,22 @@ static void ExecuteRounds<T>(
 	int roundsToExecute,
 	T worryDivisor,
 	T productOfAllDivisors) where T :
-    struct,
+	struct,
 	IMultiplyOperators<T, T, T>,
-    IAdditionOperators<T, T, T>,
-    IModulusOperators<T, T, T>,
-    IDivisionOperators<T, T, T>,
-    IIncrementOperators<T>
+	IAdditionOperators<T, T, T>,
+	IModulusOperators<T, T, T>,
+	IDivisionOperators<T, T, T>,
+	IIncrementOperators<T>
 {
-    for (int i = 0; i < roundsToExecute; ++i)
+	for (int i = 0; i < roundsToExecute; ++i)
 	{
 		foreach (var currentMonkey in monkeys)
 		{
-			foreach(var currentItem in currentMonkey.Items)
+			foreach (var currentItem in currentMonkey.Items)
 			{
 				currentMonkey.InspectionCounter++;
 				T newItemWorry = currentMonkey.Operation(currentItem);
-				
+
 				newItemWorry /= worryDivisor;
 				newItemWorry %= productOfAllDivisors;
 
@@ -96,9 +96,9 @@ IList<Monkey<int>> monkeysPartA = ParseMonkeys<int>(inputFilename).ToList();
 IList<Monkey<BigInteger>> monkeysPartB = ParseMonkeys<BigInteger>(inputFilename).ToList();
 
 int productOfAllTestDivisorsPartA =
-    monkeysPartA
-        .Select(monkey => monkey.TestDivisor)
-        .Aggregate((accumulation, current) => accumulation * current);
+	monkeysPartA
+		.Select(monkey => monkey.TestDivisor)
+		.Aggregate((accumulation, current) => accumulation * current);
 BigInteger productOfAllTestDivisorsPartB =
 	monkeysPartB
 		.Select(monkey => monkey.TestDivisor)
@@ -114,11 +114,11 @@ int monkeyBusinessLevelPartA =
 		.Take(2)
 		.Aggregate((accumulation, current) => accumulation * current);
 BigInteger monkeyBusinessLevelPartB =
-    monkeysPartB
-        .Select(monkey => monkey.InspectionCounter)
-        .OrderDescending()
-        .Take(2)
-        .Aggregate((accumulation, current) => accumulation * current);
+	monkeysPartB
+		.Select(monkey => monkey.InspectionCounter)
+		.OrderDescending()
+		.Take(2)
+		.Aggregate((accumulation, current) => accumulation * current);
 
 Console.WriteLine("Day 11A");
 Console.WriteLine($"Monkey business level: {monkeyBusinessLevelPartA}");
@@ -126,7 +126,7 @@ Console.WriteLine($"Monkey business level: {monkeyBusinessLevelPartA}");
 Console.WriteLine("Day 11B");
 Console.WriteLine($"Monkey business level: {monkeyBusinessLevelPartB}");
 
-class Monkey<T>	where T:
+class Monkey<T> where T :
 	struct,
 	IMultiplyOperators<T, T, T>,
 	IAdditionOperators<T, T, T>,
