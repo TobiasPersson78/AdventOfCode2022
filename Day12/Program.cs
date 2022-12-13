@@ -85,7 +85,7 @@ IList<Node> GetNodes(Func<IList<Node>, int, int, IEnumerable<(Node Node, int Cos
 	{
 		for (int x = 0; x < numberOfColumns; ++x)
 		{
-			Node newNode = new Node() { Id = ++lastId, Position = (x, y) };
+			Node newNode = new() { Id = ++lastId, Position = (x, y) };
 			allNodes.Add(newNode);
 		}
 	}
