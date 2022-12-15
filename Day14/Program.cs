@@ -1,4 +1,6 @@
-﻿bool useExampleInput = false;
+﻿using System.Runtime.InteropServices;
+
+bool useExampleInput = false;
 
 string inputFilename = useExampleInput
 	? "exampleInput.txt"
@@ -38,7 +40,7 @@ async Task<int> CountFallingGrainsOfSandsAsync(string inputFilename, bool addFlo
 					})
 					.ToList())
 			.ToList();
-    int yMax = allLinesUntransformed.Max(item => item.Max(xy => xy.Y));
+	int yMax = allLinesUntransformed.Max(item => item.Max(xy => xy.Y));
 
 	if (addFloor)
 	{
@@ -47,10 +49,10 @@ async Task<int> CountFallingGrainsOfSandsAsync(string inputFilename, bool addFlo
 		allLinesUntransformed.Add(new List<(int X, int Y)>
 		{
 			(DropXPositionBeforeTransformation - yMax - ExtraWidthToSimulateInfinity, yMax),
-            (DropXPositionBeforeTransformation + yMax + ExtraWidthToSimulateInfinity, yMax),
-        });
+			(DropXPositionBeforeTransformation + yMax + ExtraWidthToSimulateInfinity, yMax),
+		});
 	}
-    
+
 	int xMin = allLinesUntransformed.Min(item => item.Min(xy => xy.X));
 	int xMax = allLinesUntransformed.Max(item => item.Max(xy => xy.X));
 	// Add empty spaces at the sides
@@ -61,7 +63,8 @@ async Task<int> CountFallingGrainsOfSandsAsync(string inputFilename, bool addFlo
 	{
 		int windowWidth = Math.Max(Console.WindowWidth, rowWidth + 1);
 		int windowHeight = Math.Max(Console.WindowHeight, yMax + 5);
-		Console.SetWindowSize(windowWidth, windowHeight);
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+			Console.SetWindowSize(windowWidth, windowHeight);
 		Console.CursorVisible = false;
 	}
 
@@ -110,18 +113,18 @@ async Task<int> CountFallingGrainsOfSandsAsync(string inputFilename, bool addFlo
 							};
 						},
 						filledPointsAndPreviousCoordinate => filledPointsAndPreviousCoordinate.FilledPoints));
-	foreach (var xy in filledPositions)
+	foreach ((int x, int y) in filledPositions)
 	{
-		grid[xy.Y][xy.X] = Stone;
+		grid[y][x] = Stone;
 	}
 
 	(int X, int Y) dropPosition = (DropXPositionBeforeTransformation - xOffset, 0);
 	grid[dropPosition.Y][dropPosition.X] = Drop;
 
-    if (DisplayProgress)
-        PrintGrid(grid);
+	if (DisplayProgress)
+		PrintGrid(grid);
 
-    int numberOfGrainsOfSandThatHasFallen = 0;
+	int numberOfGrainsOfSandThatHasFallen = 0;
 	while (true)
 	{
 		(int X, int Y) sandPosition = dropPosition;
@@ -142,7 +145,7 @@ async Task<int> CountFallingGrainsOfSandsAsync(string inputFilename, bool addFlo
 					PrintGridPosition(grid, sandPosition);
 					PrintGridPosition(grid, dropPosition);
 				}
-                
+
 				sandPosition = newPosition;
 				continue;
 			}
@@ -170,8 +173,8 @@ async Task<int> CountFallingGrainsOfSandsAsync(string inputFilename, bool addFlo
 			break;
 	}
 
-    if (DisplayProgress)
-        PrintGrid(grid);
+	if (DisplayProgress)
+		PrintGrid(grid);
 
 	return numberOfGrainsOfSandThatHasFallen;
 }
@@ -186,12 +189,12 @@ async Task<int> CountFallingGrainsOfSandsAsync(string inputFilename, bool addFlo
 	if (grid[sandPosition.Y + 1][sandPosition.X - 1] == Air)
 		return (sandPosition.X - 1, sandPosition.Y + 1);
 
-    // Can it move diagonally down to the right?
-    if (grid[sandPosition.Y + 1][sandPosition.X + 1] == Air)
-        return (sandPosition.X + 1, sandPosition.Y + 1);
+	// Can it move diagonally down to the right?
+	if (grid[sandPosition.Y + 1][sandPosition.X + 1] == Air)
+		return (sandPosition.X + 1, sandPosition.Y + 1);
 
-    // It could not move.
-    return sandPosition;
+	// It could not move.
+	return sandPosition;
 }
 
 void PrintGridPosition(List<char[]> grid, (int X, int Y) position)

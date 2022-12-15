@@ -5,11 +5,11 @@ string inputFilename = useExampleInput
 	: "input.txt";
 
 IList<Node> allNodes =
-    File
-        .ReadAllLines(inputFilename)
-        .Where(item => !string.IsNullOrEmpty(item))
-        .Select(item => ParseRow(item))
-        .ToList();
+	File
+		.ReadAllLines(inputFilename)
+		.Where(item => !string.IsNullOrEmpty(item))
+		.Select(item => ParseRow(item))
+		.ToList();
 
 int sumOfIndicesOfCorrectOrderPairs = 0;
 
@@ -52,98 +52,96 @@ Console.WriteLine($"Decoder key: {decoderKey}");
 
 Node ParseRow(string row)
 {
-    if (row[0] != '[')
-        throw new IOException($"Unexpected start of row: {row}.");
+	if (row[0] != '[')
+		throw new IOException($"Unexpected start of row: {row}.");
 
-    (Node ParsedNode, int EndPosition) = ParseUntilEnd(row, 1);
+	(Node ParsedNode, int EndPosition) = ParseUntilEnd(row, 1);
 
-    return ParsedNode;
+	return ParsedNode;
 }
 
 (Node ParsedNode, int EndPosition) ParseUntilEnd(string row, int startPosition)
 {
-    IList<Node> childNodes = new List<Node>();
-    string currentNumber = string.Empty;
+	IList<Node> childNodes = new List<Node>();
+	string currentNumber = string.Empty;
 
-    for (int index = startPosition; ; ++index)
-    {
-        switch (row[index])
-        {
-            case '[':
-                (Node childNode, int endPosition) = ParseUntilEnd(row, index + 1);
-                childNodes.Add(childNode);
-                index = endPosition;
-                break;
-            case ']':
-                if (childNodes.Any())
-                {
-                    if (currentNumber.Any())
-                    {
-                        int intValue = int.Parse(currentNumber);
-                        childNodes.Add(new Node(intValue));
-                    }
-                    return (new Node(childNodes), index);
-                }
-                if (currentNumber.Any())
-                {
-                    int intValue = int.Parse(currentNumber);
-                    return (new Node(intValue), index);
-                }
-                return (new Node(), index);
-            case ',':
-                {
-                    if (currentNumber.Any())
-                    {
-                        int intValue = int.Parse(currentNumber);
-                        childNodes.Add(new Node(intValue));
-                        currentNumber = string.Empty;
-                    }
-                }
-                break;
-            default:
-                currentNumber += row[index];
-                break;
-        }
-    }
+	for (int index = startPosition; ; ++index)
+	{
+		switch (row[index])
+		{
+			case '[':
+				(Node childNode, int endPosition) = ParseUntilEnd(row, index + 1);
+				childNodes.Add(childNode);
+				index = endPosition;
+				break;
+			case ']':
+				if (childNodes.Any())
+				{
+					if (currentNumber.Any())
+					{
+						int intValue = int.Parse(currentNumber);
+						childNodes.Add(new Node(intValue));
+					}
+					return (new Node(childNodes), index);
+				}
+				if (currentNumber.Any())
+				{
+					int intValue = int.Parse(currentNumber);
+					return (new Node(intValue), index);
+				}
+				return (new Node(), index);
+			case ',':
+				if (currentNumber.Any())
+				{
+					int intValue = int.Parse(currentNumber);
+					childNodes.Add(new Node(intValue));
+					currentNumber = string.Empty;
+				}
+				break;
+			default:
+				currentNumber += row[index];
+				break;
+		}
+	}
 }
 
 int CompareNodes(Node left, Node right)
 {
-    // Both nodes are integers.
-    if (left.IsIntValue && right.IsIntValue)
-        return left.Value - right.Value;
+	// Both nodes are integers.
+	if (left.IsIntValue && right.IsIntValue)
+		return left.Value - right.Value;
 
-    // Both nodes are lists.
-    if (!left.IsIntValue && !right.IsIntValue)
-    {
-        int minChildren = Math.Min(left.ChildNodes.Count, right.ChildNodes.Count);
-        for (int index = 0; index < minChildren; ++index)
-        {
-            int result = CompareNodes(left.ChildNodes[index], right.ChildNodes[index]);
-            if (result != 0)
-                return result;
-        }
+	// Both nodes are lists.
+	if (!left.IsIntValue && !right.IsIntValue)
+	{
+		int minChildren = Math.Min(left.ChildNodes.Count, right.ChildNodes.Count);
+		for (int index = 0; index < minChildren; ++index)
+		{
+			int result = CompareNodes(left.ChildNodes[index], right.ChildNodes[index]);
+			if (result != 0)
+				return result;
+		}
 
-        return left.ChildNodes.Count - right.ChildNodes.Count;
-    }
+		return left.ChildNodes.Count - right.ChildNodes.Count;
+	}
 
-    // One of the nodes is an integer, the other a list.
-    Node leftAsList = left.IsIntValue
-        ? new Node(new[] { left })
-        : left;
-    Node rightAsList = right.IsIntValue
-        ? new Node(new[] { right })
-        : right;
-    return CompareNodes(leftAsList, rightAsList);
+	// One of the nodes is an integer, the other a list.
+	Node leftAsList = left.IsIntValue
+		? new Node(new[] { left })
+		: left;
+	Node rightAsList = right.IsIntValue
+		? new Node(new[] { right })
+		: right;
+	return CompareNodes(leftAsList, rightAsList);
 }
 
 class Node
 {
-    int intValue;
-    IList<Node> childNodes = new Node[] { };
+	private readonly int intValue;
+	private readonly IList<Node> childNodes = Array.Empty<Node>();
 
-    public bool IsIntValue { get; }
-    
+	public bool IsIntValue { get; }
+
 	public int Value
 	{
 		get
@@ -155,7 +153,7 @@ class Node
 		}
 	}
 
-    public IList<Node> ChildNodes
+	public IList<Node> ChildNodes
 	{
 		get
 		{
@@ -166,28 +164,28 @@ class Node
 		}
 	}
 
-    public Node(int value)
+	public Node(int value)
 	{
 		IsIntValue = true;
 		intValue = value;
 	}
 
-    public Node(IEnumerable<Node> childNodes)
-    {
-        IsIntValue = false;
+	public Node(IEnumerable<Node> childNodes)
+	{
+		IsIntValue = false;
 		this.childNodes = childNodes.ToList().AsReadOnly();
-    }
+	}
 
-    public Node()
+	public Node()
 		: this(Enumerable.Empty<Node>())
-    {
-    }
+	{
+	}
 
-    public override string ToString()
-    {
+	public override string ToString()
+	{
 		if (IsIntValue)
 			return intValue.ToString();
 
 		return '[' + string.Join(',', childNodes.Select(node => node.ToString())) + ']';
-    }
+	}
 }
