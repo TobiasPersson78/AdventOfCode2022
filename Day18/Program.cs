@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 
-bool useExampleInput = true;
+bool useExampleInput = false;
 
 string inputFilename = useExampleInput
 	? "exampleInput.txt"
