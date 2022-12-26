@@ -109,7 +109,6 @@ Console.WriteLine($"Value the root monkey yells: {rootYells}.");
 Console.WriteLine("Day 21B");
 Console.WriteLine($"Value the human yells: {humanValue}.");
 
-
 void SetHumanValue(long value)
 {
 	humanValue = value;
