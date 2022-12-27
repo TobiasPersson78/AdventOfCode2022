@@ -88,7 +88,7 @@ int passwordPartB = DoMovement(map, allStepsAndRotations, BorderMovementPartB);
 Console.WriteLine("Day 22A");
 Console.WriteLine($"The password is {passwordPartA}.");
 
-Console.WriteLine("Day 21B");
+Console.WriteLine("Day 22B");
 Console.WriteLine($"The password is {passwordPartB}.");
 
 int DoMovement(
