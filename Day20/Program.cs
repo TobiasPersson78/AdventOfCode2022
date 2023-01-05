@@ -12,12 +12,12 @@ IList<LongWrapper> originalOrder =
 		.Where(item => !string.IsNullOrEmpty(item))
 		.Select(item => new LongWrapper { Value = int.Parse(item) })
 		.ToList();
-const long decryptionKeyPartA = 1;
-const long decryptionKeyPartB = 811589153;
-const int numberOfMixingsPartA = 1;
-const int numberOfMixingsPartB = 10;
-long coordinatePartA = GetCoordinate(originalOrder, decryptionKeyPartA, numberOfMixingsPartA);
-long coordinatePartB = GetCoordinate(originalOrder, decryptionKeyPartB, numberOfMixingsPartB);
+const long DecryptionKeyPartA = 1;
+const long DecryptionKeyPartB = 811589153;
+const int NumberOfMixingsPartA = 1;
+const int NumberOfMixingsPartB = 10;
+long coordinatePartA = GetCoordinate(originalOrder, DecryptionKeyPartA, NumberOfMixingsPartA);
+long coordinatePartB = GetCoordinate(originalOrder, DecryptionKeyPartB, NumberOfMixingsPartB);
 
 Console.WriteLine("Day 20A");
 Console.WriteLine($"Grove coordinate: {coordinatePartA}.");

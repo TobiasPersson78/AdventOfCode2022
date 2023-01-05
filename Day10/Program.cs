@@ -32,10 +32,10 @@ ISet<int> cyclesToCheckSignalStrengths = new HashSet<int>
 int sumOfSignalStrengths = 0;
 int cycleCounter = 0;
 int xRegister = 1;
-const int rowWidth = 40;
-const char litChar = '#';
-const char darkChar = '.';
-const int spriteWidth = 3;
+const int RowWidth = 40;
+const char LitChar = '#';
+const char DarkChar = '.';
+const int SpriteWidth = 3;
 StringBuilder currentLine = new();
 
 foreach (int xChange in GetXChanges())
@@ -44,16 +44,16 @@ foreach (int xChange in GetXChanges())
 	if (cyclesToCheckSignalStrengths.Contains(cycleCounter))
 		sumOfSignalStrengths += xRegister * cycleCounter;
 
-	int currentColumn = (cycleCounter - 1) % rowWidth;
+	int currentColumn = (cycleCounter - 1) % RowWidth;
 
-	char currentChar = Math.Abs(xRegister - currentColumn) <= spriteWidth / 2
-		? litChar
-		: darkChar;
+	char currentChar = Math.Abs(xRegister - currentColumn) <= SpriteWidth / 2
+		? LitChar
+		: DarkChar;
 	currentLine.Append(currentChar);
 
 	Debug.WriteLine($"During cycle {cycleCounter}, X is {xRegister}, current line is {currentLine}");
 
-	if (currentColumn % rowWidth == rowWidth - 1)
+	if (currentColumn % RowWidth == RowWidth - 1)
 	{
 		Console.WriteLine(currentLine.ToString());
 		currentLine.Clear();

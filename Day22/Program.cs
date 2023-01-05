@@ -6,14 +6,14 @@ string inputFilename = useExampleInput
 	? "exampleInput.txt"
 	: "input.txt";
 
-const string rotateRight = "R";
-const string rotateLeft = "L";
-const char solidWall = '#';
-const char openTile = '.';
-const char notUsedTile = ' ';
+const string RotateRight = "R";
+const string RotateLeft = "L";
+const char SolidWall = '#';
+const char OpenTile = '.';
+const char NotUsedTile = ' ';
 
-const int pointsFactorForRow = 1000;
-const int pointsFactorForColumn = 4;
+const int PointsFactorForRow = 1000;
+const int PointsFactorForColumn = 4;
 Dictionary<Direction, int> pointsForDirection = new()
 {
 	{ Direction.Left, 2 },
@@ -72,17 +72,17 @@ int tileColumnsInMap = map.Max(row => row.Length);
 
 // For simplicty when checking the map, fill out the rows to have the same length.
 for (int i = 0; i < tileRowsInMap; ++i )
-	map[i] += new string(notUsedTile, tileColumnsInMap - map[i].Length);
+	map[i] += new string(NotUsedTile, tileColumnsInMap - map[i].Length);
 
 // The number of used tiles divided by six is the number of tiles used for each face. The square
 // root of that becomes the size of the face width and height.
-const int numberOfCubeFaces = 6;
+const int NumberOfCubeFaces = 6;
 int tilesPerFaceDimension =
 	Convert.ToInt32(
 		Math.Round(
 			Math.Sqrt(
 				map.Sum(row =>
-					row.Count(column => column != notUsedTile)) / numberOfCubeFaces)));
+					row.Count(column => column != NotUsedTile)) / NumberOfCubeFaces)));
 
 int faceRowsInMap = tileRowsInMap / tilesPerFaceDimension;
 int faceColumnsInMap = tileColumnsInMap / tilesPerFaceDimension;
@@ -94,7 +94,7 @@ IList<(int FaceRow, int FaceColumn)> facePositionsInMap =
 			Enumerable
 				.Range(0, faceColumnsInMap)
 				.Where(faceColumnIndex =>
-					map[faceRowIndex * tilesPerFaceDimension][faceColumnIndex * tilesPerFaceDimension] != notUsedTile)
+					map[faceRowIndex * tilesPerFaceDimension][faceColumnIndex * tilesPerFaceDimension] != NotUsedTile)
 				.Select(faceColumnIndex => (FaceRow: faceRowIndex, FaceColumn: faceColumnIndex)))
 		.ToList();
 
@@ -166,7 +166,7 @@ int DoMovement(
 	Func<IList<string>, int, int, Direction, (int Row, int Column, Direction Direction)> getNextTilePosition)
 {
 	int row = 0;
-	int column = map[0].IndexOf(openTile);
+	int column = map[0].IndexOf(OpenTile);
 	Direction direction = Direction.Right;
 
 	foreach (string stepsOrRotation in allStepsAndRotations)
@@ -175,11 +175,11 @@ int DoMovement(
 
 		switch (stepsOrRotation)
 		{
-			case rotateLeft:
+			case RotateLeft:
 				direction = rotationLookup[(direction, Rotation.Degrees270)];
 				break;
 
-			case rotateRight:
+			case RotateRight:
 				direction = rotationLookup[(direction, Rotation.Degrees90)];
 				break;
 
@@ -189,7 +189,7 @@ int DoMovement(
 					(int desiredRow, int desiredColumn, Direction desiredDirection) =
 						getNextTilePosition(map, row, column, direction);
 
-					if (map[desiredRow][desiredColumn] == solidWall)
+					if (map[desiredRow][desiredColumn] == SolidWall)
 						break; // No more steps in this direction is possible.
 
 					(row, column, direction) = (desiredRow, desiredColumn, desiredDirection);
@@ -200,8 +200,8 @@ int DoMovement(
 	Console.WriteLine($"Position is [{row}, {column}], direction is {direction}.");
 
 	int password =
-		pointsFactorForRow * (row + 1) +
-		pointsFactorForColumn * (column + 1) +
+		PointsFactorForRow * (row + 1) +
+		PointsFactorForColumn * (column + 1) +
 		pointsForDirection[direction];
 
 	return password;
@@ -224,7 +224,7 @@ int DoMovement(
 		desiredRow = (desiredRow + yChange + tileRowsInMap) % tileRowsInMap;
 		desiredColumn = (desiredColumn + xChange + tileColumnsInMap) % tileColumnsInMap;
 	}
-	while (map[desiredRow][desiredColumn] == notUsedTile);
+	while (map[desiredRow][desiredColumn] == NotUsedTile);
 
 	return (desiredRow, desiredColumn, direction);
 }

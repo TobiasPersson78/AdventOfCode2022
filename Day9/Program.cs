@@ -4,7 +4,7 @@ string inputFilename = useExampleInput
 	? "exampleInput.txt"
 	: "input.txt";
 
-const int maxAllowedDistance = 1;
+const int MaxAllowedDistance = 1;
 
 (int X, int Y) headPosition = (0, 0);
 (int X, int Y) tailPosition = headPosition;
@@ -28,28 +28,28 @@ static (int X, int Y) MoveNextToIfNeeded((int X, int Y) firstPosition, (int X, i
 	int verticalDistance = firstPosition.Y - secondPosition.Y;
 
 	// Left up
-	if (horizontalDistance < -maxAllowedDistance && verticalDistance > maxAllowedDistance)
+	if (horizontalDistance < -MaxAllowedDistance && verticalDistance > MaxAllowedDistance)
 		return (firstPosition.X + 1, firstPosition.Y - 1);
 	// Right up
-	if (horizontalDistance > maxAllowedDistance && verticalDistance > maxAllowedDistance)
+	if (horizontalDistance > MaxAllowedDistance && verticalDistance > MaxAllowedDistance)
 		return (firstPosition.X - 1, firstPosition.Y - 1);
 	// Right down
-	if (horizontalDistance > maxAllowedDistance && verticalDistance < -maxAllowedDistance)
+	if (horizontalDistance > MaxAllowedDistance && verticalDistance < -MaxAllowedDistance)
 		return (firstPosition.X - 1, firstPosition.Y + 1);
 	// Left down
-	if (horizontalDistance < -maxAllowedDistance && verticalDistance < -maxAllowedDistance)
+	if (horizontalDistance < -MaxAllowedDistance && verticalDistance < -MaxAllowedDistance)
 		return (firstPosition.X + 1, firstPosition.Y + 1);
 	// Left
-	if (horizontalDistance < -maxAllowedDistance)
+	if (horizontalDistance < -MaxAllowedDistance)
 		return (firstPosition.X + 1, firstPosition.Y);
 	// Right
-	if (horizontalDistance > maxAllowedDistance)
+	if (horizontalDistance > MaxAllowedDistance)
 		return (firstPosition.X - 1, firstPosition.Y);
 	// Up
-	if (verticalDistance > maxAllowedDistance)
+	if (verticalDistance > MaxAllowedDistance)
 		return (firstPosition.X, firstPosition.Y - 1);
 	// Down
-	if (verticalDistance < -maxAllowedDistance)
+	if (verticalDistance < -MaxAllowedDistance)
 		return (firstPosition.X, firstPosition.Y + 1);
 
 	return secondPosition;

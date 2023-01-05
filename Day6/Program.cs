@@ -6,8 +6,8 @@ string inputFilename = useExampleInput
 
 char[] messageStream = File.ReadAllText(inputFilename).Trim().ToCharArray();
 
-const int slidingWindowSizePartA = 4;
-const int slidingWindowSizePartB = 14;
+const int SlidingWindowSizePartA = 4;
+const int SlidingWindowSizePartB = 14;
 
 int FindFirstAllUniqueWindowIndex(char[] streamContent, int slidingWindowSize)
 {
@@ -24,8 +24,8 @@ int FindFirstAllUniqueWindowIndex(char[] streamContent, int slidingWindowSize)
 	throw new InvalidOperationException("No all unique window found.");
 }
 
-int startOfPacketIndex = FindFirstAllUniqueWindowIndex(messageStream, slidingWindowSizePartA);
-int startOfMessageIndex = FindFirstAllUniqueWindowIndex(messageStream, slidingWindowSizePartB);
+int startOfPacketIndex = FindFirstAllUniqueWindowIndex(messageStream, SlidingWindowSizePartA);
+int startOfMessageIndex = FindFirstAllUniqueWindowIndex(messageStream, SlidingWindowSizePartB);
 
 Console.WriteLine("Day 6A");
 Console.WriteLine($"First packet index: {startOfPacketIndex}");

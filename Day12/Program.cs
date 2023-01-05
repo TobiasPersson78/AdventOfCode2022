@@ -170,23 +170,23 @@ IEnumerable<(Node Node, int Cost)> GetEdgesForPositionPartA(IList<Node> allNodes
 	char maxHeight = heightMap[y][x];
 	maxHeight++;
 
-	const int defaultCost = 1;
+	const int DefaultCost = 1;
 
 	// Up
 	if (y > 0 && heightMap[y - 1][x] <= maxHeight)
-		yield return (allNodes[GetIdFromPosition(x, y - 1)], defaultCost);
+		yield return (allNodes[GetIdFromPosition(x, y - 1)], DefaultCost);
 
 	// Down
 	if (y < numberOfRows - 1 && heightMap[y + 1][x] <= maxHeight)
-		yield return (allNodes[GetIdFromPosition(x, y + 1)], defaultCost);
+		yield return (allNodes[GetIdFromPosition(x, y + 1)], DefaultCost);
 
 	// Left
 	if (x > 0 && heightMap[y][x - 1] <= maxHeight)
-		yield return (allNodes[GetIdFromPosition(x - 1, y)], defaultCost);
+		yield return (allNodes[GetIdFromPosition(x - 1, y)], DefaultCost);
 
 	// Right
 	if (x < numberOfColumns - 1 && heightMap[y][x + 1] <= maxHeight)
-		yield return (allNodes[GetIdFromPosition(x + 1, y)], defaultCost);
+		yield return (allNodes[GetIdFromPosition(x + 1, y)], DefaultCost);
 }
 
 IEnumerable<(Node Node, int Cost)> GetEdgesForPositionPartB(IList<Node> allNodes, int x, int y)
@@ -194,23 +194,23 @@ IEnumerable<(Node Node, int Cost)> GetEdgesForPositionPartB(IList<Node> allNodes
 	char minHeight = heightMap[y][x];
 	minHeight--;
 
-	const int defaultCost = 1;
+	const int DefaultCost = 1;
 
 	// Up
 	if (y > 0 && heightMap[y - 1][x] >= minHeight)
-		yield return (allNodes[GetIdFromPosition(x, y - 1)], defaultCost);
+		yield return (allNodes[GetIdFromPosition(x, y - 1)], DefaultCost);
 
 	// Down
 	if (y < numberOfRows - 1 && heightMap[y + 1][x] >= minHeight)
-		yield return (allNodes[GetIdFromPosition(x, y + 1)], defaultCost);
+		yield return (allNodes[GetIdFromPosition(x, y + 1)], DefaultCost);
 
 	// Left
 	if (x > 0 && heightMap[y][x - 1] >= minHeight)
-		yield return (allNodes[GetIdFromPosition(x - 1, y)], defaultCost);
+		yield return (allNodes[GetIdFromPosition(x - 1, y)], DefaultCost);
 
 	// Right
 	if (x < numberOfColumns - 1 && heightMap[y][x + 1] >= minHeight)
-		yield return (allNodes[GetIdFromPosition(x + 1, y)], defaultCost);
+		yield return (allNodes[GetIdFromPosition(x + 1, y)], DefaultCost);
 }
 
 class Node

@@ -4,7 +4,7 @@ string inputFilename = useExampleInput
 	? "exampleInput.txt"
 	: "input.txt";
 
-const char elfPositionIndicator = '#';
+const char ElfPositionIndicator = '#';
 
 ISet<Position> positionsOfElves =
 	File
@@ -12,7 +12,7 @@ ISet<Position> positionsOfElves =
 		.SelectMany((row, rowIndex) =>
 			row
 				.Select((charInRow, columnIndex) => (Char: charInRow, Column: columnIndex))
-				.Where(item => item.Char == elfPositionIndicator)
+				.Where(item => item.Char == ElfPositionIndicator)
 				.Select(item => new Position(item.Column, rowIndex)))
 		.ToHashSet();
 
@@ -27,11 +27,11 @@ IList<Func<Position, IEnumerable<Position>, (bool Move, Position Target)>> movem
 
 int coveredAreaWithoutElvesPartA = 0;
 int roundsBeforeNoMovementPartB = 0;
-const int numberOfRoundsPartA = 10;
+const int NumberOfRoundsPartA = 10;
 
 for (int roundIndex = 0; ; ++roundIndex)
 {
-	if (roundIndex == numberOfRoundsPartA)
+	if (roundIndex == NumberOfRoundsPartA)
 	{
 		int minX = positionsOfElves.Min(item => item.X);
 		int maxX = positionsOfElves.Max(item => item.X);

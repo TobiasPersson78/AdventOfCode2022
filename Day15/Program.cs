@@ -13,9 +13,9 @@ IList<SensorAndBeacon> listOfSensorAndBeacon =
 		.Where(item => !string.IsNullOrEmpty(item))
 		.Select(row =>
 		{
-			const string sensorAndBeaconPattern = @"^Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)$";
+			const string SensorAndBeaconPattern = @"^Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)$";
 
-			var match = Regex.Match(row, sensorAndBeaconPattern);
+			var match = Regex.Match(row, SensorAndBeaconPattern);
 
 			if (!match.Success)
 				throw new IOException($"Failed to parse {row}.");

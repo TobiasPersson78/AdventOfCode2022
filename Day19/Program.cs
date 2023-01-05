@@ -25,8 +25,8 @@ IList<Blueprint> blueprintsForPartA =
 		.ToList();
 IList<Blueprint> blueprintsForPartB = blueprintsForPartA.Take(3).ToList();
 
-const int maxTimeInMinutesPartA = 24;
-const int maxTimeInMinutesPartB = 32;
+const int MaxTimeInMinutesPartA = 24;
+const int MaxTimeInMinutesPartB = 32;
 
 int sumOfQualityLevels = 0;
 foreach (Blueprint blueprint in blueprintsForPartA)
@@ -37,10 +37,10 @@ foreach (Blueprint blueprint in blueprintsForPartA)
 			new RobotsAndMineralsState(0, 1, 0, 0, 0, 0, 0, 0, 0),
 			blueprint,
 			GetMaxMineralsNeededForBlueprint(blueprint),
-			maxTimeInMinutesPartA,
+			MaxTimeInMinutesPartA,
 			new Dictionary<RobotsAndMineralsState, int>(),
 			ref bestResultFoundForThisBlueprint);
-	Console.WriteLine($"The highest number of geodes found for {blueprint.Id} in {maxTimeInMinutesPartA} minutes is {numberOfGeodes}.");
+	Console.WriteLine($"The highest number of geodes found for {blueprint.Id} in {MaxTimeInMinutesPartA} minutes is {numberOfGeodes}.");
 	sumOfQualityLevels += blueprint.Id * numberOfGeodes;
 }
 
@@ -53,10 +53,10 @@ foreach (Blueprint blueprint in blueprintsForPartB)
 			new RobotsAndMineralsState(0, 1, 0, 0, 0, 0, 0, 0, 0),
 			blueprint,
 			GetMaxMineralsNeededForBlueprint(blueprint),
-			maxTimeInMinutesPartB,
+			MaxTimeInMinutesPartB,
 			new Dictionary<RobotsAndMineralsState, int>(),
 			ref bestResultFoundForThisBlueprint);
-	Console.WriteLine($"The highest number of geodes found for {blueprint.Id} in {maxTimeInMinutesPartB} minutes is {numberOfGeodes}.");
+	Console.WriteLine($"The highest number of geodes found for {blueprint.Id} in {MaxTimeInMinutesPartB} minutes is {numberOfGeodes}.");
 	productOfGeodeCounts *= numberOfGeodes;
 }
 

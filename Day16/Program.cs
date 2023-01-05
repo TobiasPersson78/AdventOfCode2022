@@ -6,13 +6,13 @@ string inputFilename = useExampleInput
 	? "exampleInput.txt"
 	: "input.txt";
 
-const string valveParsePattern = @"([A-Z]{2}|\d+)";
-const string startPositionId = "AA";
-const int infinitePathTime = int.MaxValue / 2 - 1; // Large enough to not overflow when added to the same value.
-const int neightborPathTravelTime = 1;
-const int timeToOpenValve = 1;
-const int timeToTrainElephant = 4;
-const int maxTimeToReleasePreassure = 30;
+const string ValveParsePattern = @"([A-Z]{2}|\d+)";
+const string StartPositionId = "AA";
+const int InfinitePathTime = int.MaxValue / 2 - 1; // Large enough to not overflow when added to the same value.
+const int NeightborPathTravelTime = 1;
+const int TimeToOpenValve = 1;
+const int TimeToTrainElephant = 4;
+const int MaxTimeToReleasePreassure = 30;
 
 IList<Valve> allValves =
 	File
@@ -20,7 +20,7 @@ IList<Valve> allValves =
 		.Where(item => !string.IsNullOrEmpty(item))
 		.Select(row =>
 			Regex
-				.Matches(row, valveParsePattern)
+				.Matches(row, ValveParsePattern)
 				.Select(match => match.Value)
 				.ToList())
 		.Select(matchingStrings =>
@@ -38,12 +38,12 @@ IDictionary<Valve, Dictionary<Valve, int>> allPathCosts =
 					.ToDictionary(
 						toValve => toValve,
 						toValve => fromValve.Neighbors.Any(neightborId => neightborId == toValve.ID)
-							? neightborPathTravelTime
-							: infinitePathTime));
+							? NeightborPathTravelTime
+							: InfinitePathTime));
 UpdateShortestPathUsingFloydWarshall(allPathCosts);
 RemoveZeroFlowValvesAsTargets(allPathCosts);
 
-Valve startPositionValve = allValves.First(item => item.ID == startPositionId);
+Valve startPositionValve = allValves.First(item => item.ID == StartPositionId);
 
 int maximumReleasedPressurePartA = 0;
 DepthFirstSearch(
@@ -53,7 +53,7 @@ DepthFirstSearch(
 	null,
 	new List<(Valve Valve, int Time)>(),
 	0,
-	maxTimeToReleasePreassure,
+	MaxTimeToReleasePreassure,
 	ref maximumReleasedPressurePartA);
 
 int maximumReleasedPressurePartB = 0;
@@ -64,7 +64,7 @@ DepthFirstSearch(
 	startPositionValve,
 	new List<(Valve Valve, int Time)>(),
 	0,
-	maxTimeToReleasePreassure - timeToTrainElephant,
+	MaxTimeToReleasePreassure - TimeToTrainElephant,
 	ref maximumReleasedPressurePartB);
 
 Console.WriteLine("Day 16A");
@@ -94,7 +94,7 @@ void DepthFirstSearch(
 	foreach (Valve toValve in allPathCosts[curentValve].Keys)
 	{
 		int toValveTravelTime = allPathCosts[curentValve][toValve];
-		int timeToMoveToAndOpenToValve = toValveTravelTime + timeToOpenValve;
+		int timeToMoveToAndOpenToValve = toValveTravelTime + TimeToOpenValve;
 		int timeAfterMovingAndOpeningToValve = currentTime + timeToMoveToAndOpenToValve;
 
 		if (!visistedValvesAndTimes.Any(item => item.Valve == toValve) &&

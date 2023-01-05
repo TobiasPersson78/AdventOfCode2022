@@ -4,8 +4,8 @@ string inputFilename = useExampleInput
 	? "exampleInput.txt"
 	: "input.txt";
 
-const char moveLeft = '<';
-const char moveRight = '>';
+const char MoveLeft = '<';
+const char MoveRight = '>';
 
 IList<char> leftRightMovementPattern = File.ReadAllText(inputFilename).TrimEnd().ToCharArray();
 
@@ -47,24 +47,24 @@ IList<int[]> allBlocksInFallOrder = new[]
 };
 int maxHeightOfOneBlockSequence = allBlocksInFallOrder.Sum(block => block.Length);
 
-const int bottom = 0b111111111;
-const int walls = 0b100000001;
-const int emptyLinesBeforeNewBlock = 3;
-const int numberOfFallingRocksPartA = 2022;
-const long numberOfFallingRocksPartB = 1_000_000_000_000;
+const int Bottom = 0b111111111;
+const int Walls = 0b100000001;
+const int EmptyLinesBeforeNewBlock = 3;
+const int NumberOfFallingRocksPartA = 2022;
+const long NumberOfFallingRocksPartB = 1_000_000_000_000;
 
-long heightOfRocksPartA = CalculateHeight(numberOfFallingRocksPartA);
-long heightOfRocksPartB = CalculateHeight(numberOfFallingRocksPartB);
+long heightOfRocksPartA = CalculateHeight(NumberOfFallingRocksPartA);
+long heightOfRocksPartB = CalculateHeight(NumberOfFallingRocksPartB);
 
 Console.WriteLine("Day 17A");
-Console.WriteLine($"Height of rock tower after {numberOfFallingRocksPartA} rocks: {heightOfRocksPartA}");
+Console.WriteLine($"Height of rock tower after {NumberOfFallingRocksPartA} rocks: {heightOfRocksPartA}");
 
 Console.WriteLine("Day 17B");
-Console.WriteLine($"Height of rock tower after {numberOfFallingRocksPartB} rocks: {heightOfRocksPartB}");
+Console.WriteLine($"Height of rock tower after {NumberOfFallingRocksPartB} rocks: {heightOfRocksPartB}");
 
 long CalculateHeight(long numberOfFallingRocks)
 {
-	List<int> tower = new() { bottom };
+	List<int> tower = new() { Bottom };
 	int rockIndex = 0;
 	int leftRightIndex = 0;
 
@@ -105,7 +105,7 @@ long CalculateHeight(long numberOfFallingRocks)
 		}
 
 		// Add empty space.
-		tower.AddRange(Enumerable.Repeat(walls, emptyLinesBeforeNewBlock + block.Length));
+		tower.AddRange(Enumerable.Repeat(Walls, EmptyLinesBeforeNewBlock + block.Length));
 		int blockTopLine = tower.Count - 1;
 
 		bool couldMoveDown = false;
@@ -127,7 +127,7 @@ long CalculateHeight(long numberOfFallingRocks)
 		while (couldMoveDown);
 
 		// Remove only walls from top of tower.
-		while (tower[tower.Count - 1] == walls)
+		while (tower[tower.Count - 1] == Walls)
 			tower.RemoveAt(tower.Count - 1);
 
 		// Increase the rock index.
@@ -160,11 +160,11 @@ bool TryMoveDown(int blockTopLine, int[] block, IList<int> tower)
 
 void TryMoveHorizontally(char direction, int blockTopLine, int[] block, IList<int> tower)
 {
-	if (direction != moveLeft && direction != moveRight)
+	if (direction != MoveLeft && direction != MoveRight)
 		throw new ArgumentException($"Unexpected direction {direction}.");
 
 	var movedBlock =
-		direction == moveLeft
+		direction == MoveLeft
 			? block.Select(item => item << 1).ToArray()
 			: block.Select(item => item >> 1).ToArray();
 

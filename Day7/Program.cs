@@ -55,12 +55,12 @@ foreach (string row in File.ReadAllLines(inputFilename).Where(item => !string.Is
 
 CalculateFolderSize(rootFolder);
 
-const int folderSizeLimit = 100000;
+const int FolderSizeLimit = 100000;
 IList<Node<FolderData>> selectedFolders = new List<Node<FolderData>>();
 
 rootFolder.Visit(folderNode =>
 {
-	if (folderNode.Value.LastCalculatedSize < folderSizeLimit)
+	if (folderNode.Value.LastCalculatedSize < FolderSizeLimit)
 		selectedFolders.Add(folderNode);
 });
 
@@ -72,13 +72,13 @@ rootFolder.Visit(folderNode =>
 	allFolders.Add(folderNode);
 });
 
-const int filesystemCapacity = 70000000;
-const int desiredFreeSize = 30000000;
-const int maxSizeOfAllFoldersAndFiles = filesystemCapacity - desiredFreeSize;
+const int FilesystemCapacity = 70000000;
+const int DesiredFreeSize = 30000000;
+const int MaxSizeOfAllFoldersAndFiles = FilesystemCapacity - DesiredFreeSize;
 
 
 IList<Node<FolderData>> filteredFolders = allFolders
-	.Where(folderNode => rootFolder.Value.LastCalculatedSize - folderNode.Value.LastCalculatedSize < maxSizeOfAllFoldersAndFiles)
+	.Where(folderNode => rootFolder.Value.LastCalculatedSize - folderNode.Value.LastCalculatedSize < MaxSizeOfAllFoldersAndFiles)
 	.OrderBy(folderNode => folderNode.Value.LastCalculatedSize)
 	.ToList();
 int sizeOfFolderToRemove = filteredFolders.First().Value.LastCalculatedSize;

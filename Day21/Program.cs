@@ -51,7 +51,7 @@ monkeyLookup =
 
 long rootYells = monkeyLookup["root"].Function();
 
-const string human = "humn";
+const string Human = "humn";
 
 IList<string> rootChildren = monkeyLookup["root"].Dependencies;
 
@@ -61,7 +61,7 @@ if (rootChildren?.Count != 2)
 Func<long> evaluateFunction;
 long targetValue;
 
-if (GetDependencies(rootChildren.First(), monkeyLookup).Contains(human))
+if (GetDependencies(rootChildren.First(), monkeyLookup).Contains(Human))
 {
 	evaluateFunction = monkeyLookup[rootChildren.First()].Function;
 	targetValue = monkeyLookup[rootChildren.Last()]!.Function();
@@ -112,7 +112,7 @@ Console.WriteLine($"Value the human yells: {humanValue}.");
 void SetHumanValue(long value)
 {
 	humanValue = value;
-	monkeyLookup![human] = (() => value, Array.Empty<string>());
+	monkeyLookup![Human] = (() => value, Array.Empty<string>());
 }
 
 IImmutableSet<string> GetDependencies(
